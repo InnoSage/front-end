@@ -18,7 +18,7 @@ export default function LandingLayout({ children }: { children: any }) {
                 />
             </head>
             <body>
-                <MantineProvider theme={ theme }>
+                <MantineProvider theme={ theme } defaultColorScheme="auto">
                     <LandingMantineLayout>
                         {children}
                     </LandingMantineLayout>

@@ -7,11 +7,11 @@ export default function ApplicationMantineLayout({ children }: Readonly<{ childr
         <AppShell
             navbar={ {
                 width: 240,
-                breakpoint: "sm"
+                breakpoint: 0
             } }
         >
             <AppShellNavbar>
-                <ApplicationNavbar />
+                <ApplicationNavbar username="username" organization="organization" />
             </AppShellNavbar>
             <AppShellMain>
                 {children}

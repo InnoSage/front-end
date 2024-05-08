@@ -28,10 +28,14 @@ const quotaGray: MantineColorsTuple = [
     "#4f5563"
 ];
 
-export const theme = createTheme({
+const baseTheme = {
     colors: {
         "quota-green": quotaGreen,
         "quota-gray": quotaGray
     },
     primaryColor: "quota-green"
+};
+
+export const theme = createTheme({
+    ...baseTheme
 });

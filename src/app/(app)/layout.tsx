@@ -18,7 +18,7 @@ export default function ApplicationLayout({ children }: { children: any }) {
                 />
             </head>
             <body>
-                <MantineProvider theme={ theme }>
+                <MantineProvider theme={ theme } defaultColorScheme="auto">
                     <ApplicationMantineLayout>
                         {children}
                     </ApplicationMantineLayout>
