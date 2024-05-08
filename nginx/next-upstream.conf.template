@@ -1,0 +1,3 @@
+upstream nextjs {
+  server front-next:${NEXT_PORT};
+}
