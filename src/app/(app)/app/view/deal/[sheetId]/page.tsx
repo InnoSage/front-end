@@ -12,7 +12,7 @@ type DealIdPageProps = {
     }
 };
 
-export async function fetchSheet(sheetId: number): Promise<Sheet> {
+async function fetchSheet(sheetId: number): Promise<Sheet> {
     // return dummy sheet
     // TODO: fetch deal view data from real API
 
