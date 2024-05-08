@@ -35,7 +35,7 @@
     "@stylistic/generator-star-spacing": [ "error", "after" ],
     "indent": "off",
     "@stylistic/indent": [ "error", 4 ],
-    "@stylistic/jsx-closing-bracket-location": [ "error", "tag-aligned" ],
+    "@stylistic/jsx-closing-bracket-location": [ "warn", "tag-aligned" ],
     "@stylistic/jsx-curly-newline": [ "error", "consistent" ],
     "@stylistic/jsx-curly-spacing": [ "error", "always" ],
     "@stylistic/jsx-equals-spacing": [ "error", "never" ],
