@@ -55,6 +55,7 @@ export default function Table<T extends Record<string, any>>({ attributes, data 
                     reactiveCustomComponents={ true }
                     onSelectionChanged={ onSelectionChanged }
                     onCellValueChanged={ onValueChanged }
+                    onSortChanged={ (e) => e.api.refreshCells() }
                 />
             </div>
             <div style={ { width: "100%", height: "5%" } }>
