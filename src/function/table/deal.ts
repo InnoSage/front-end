@@ -29,7 +29,8 @@ function toAttributes(attributes: SheetAttribute[]) {
             checkboxSelection: true,
             maxWidth: 75, minWidth: 75,
             editable: false,
-            headerCheckboxSelection: true
+            headerCheckboxSelection: true,
+            valueGetter: "node.rowIndex + 1"
         },
         {
             colId: "company",
@@ -126,7 +127,6 @@ function toData(attributes: SheetAttribute[], companies: SheetCompany[], data: S
             }
         });
 
-        value["num"] = i;
         value["company"] = CompanyMap[d.companyId];
         value["id"] = d.id;
 
