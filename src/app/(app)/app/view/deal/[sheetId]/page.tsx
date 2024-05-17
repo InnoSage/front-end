@@ -1,10 +1,8 @@
 import { notFound } from "next/navigation";
-import Table from "@/component/view/table";
 import { sheetToTable } from "@/function/table/deal";
-import { Container } from "@mantine/core";
-import ViewHeader from "@/component/view/header";
-import TableControl from "@/component/view/table-control";
 import { Sheet } from "@/function/table/type";
+import SheetIdClientPage from "@/app/(app)/app/view/deal/[sheetId]/page.client";
+import { getToken } from "@/function/token/get";
 
 type DealIdPageProps = {
     params: {
@@ -152,6 +150,7 @@ async function fetchSheet(sheetId: number): Promise<Sheet> {
 }
 
 export default async function SheetIdPage({ params }: Readonly<DealIdPageProps>) {
+    const token = getToken();
     const sheetId = Number(params.sheetId);
 
     if (isNaN(sheetId)) {
@@ -162,19 +161,6 @@ export default async function SheetIdPage({ params }: Readonly<DealIdPageProps>)
     const table = sheetToTable(sheet);
 
     return <>
-        <Container h="5vh" my="xs" fluid>
-            <ViewHeader id={ sheetId } name={ sheet.sheetName } />
-        </Container>
-
-        <Container h="5vh" mb="xs" fluid>
-            <TableControl />
-        </Container>
-
-        <div style={ { height: "88vh", width: "100%" } }>
-            <Table
-                attributes={ table.attributes }
-                data={ table.data }
-            />
-        </div>
+        <SheetIdClientPage sheetId={ sheetId } sheet={ sheet } />
     </>;
 }
