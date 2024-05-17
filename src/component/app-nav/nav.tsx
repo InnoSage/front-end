@@ -4,12 +4,7 @@ import Logo from "@/component/logo";
 import UserButton from "@/component/app-nav/user-button";
 import ApplicationNavbarViewList from "@/component/app-nav/view-list";
 
-type ApplicationNavbarProps = {
-    username: string,
-    organization: string
-};
-
-export default function ApplicationNavbar({ username, organization }: Readonly<ApplicationNavbarProps>) {
+export default function ApplicationNavbar() {
     return (
         <Box h="100%" w="100%" p={ 0 } m={ 0 }>
             <Flex h="100%" w="100%" p={ 0 } m={ 0 } display="flex" direction="column">
@@ -27,7 +22,7 @@ export default function ApplicationNavbar({ username, organization }: Readonly<A
                 <Divider />
 
                 <Group py="0" my="0" h="3rem">
-                    <UserButton username={ username } organization={ organization } />
+                    <UserButton />
                 </Group>
             </Flex>
         </Box>
