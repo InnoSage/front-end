@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useComputedColorScheme } from "@mantine/core";
 import { AgGridReact } from "@ag-grid-community/react";
 import { CellValueChangedEvent, ColDef, ModuleRegistry, SelectionChangedEvent } from "@ag-grid-community/core";
@@ -27,6 +27,7 @@ ModuleRegistry.registerModules([ ClientSideRowModelModule ]);
 export default function Table<T extends Record<string, any>>({ attributes, data }: Readonly<TableProps<T>>) {
     const [ columnDefines, setColumnDefines ] = useState<ColDef[]>(attributes);
     const [ rowData, setRowData ] = useState<T[]>(data);
+    const tableRef = useRef<AgGridReact>(null);
     const colorScheme = useComputedColorScheme();
     const [ selectedRows, setSelectedRows ] = useState<Array<any>>([]);
 
@@ -48,6 +49,7 @@ export default function Table<T extends Record<string, any>>({ attributes, data 
         >
             <div style={ { width: "100%", height: "93%" } }>
                 <AgGridReact
+                    ref={ tableRef }
                     columnDefs={ columnDefines }
                     rowData={ rowData }
                     rowSelection="multiple"

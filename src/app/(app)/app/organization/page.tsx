@@ -1,7 +1,31 @@
-export default function OrganizationPage() {
+import { getOrganizations } from "@/function/api/organization";
+import { getToken } from "@/function/token/get";
+import { notFound } from "next/navigation";
+import OrganizationClientPage from "@/app/(app)/app/organization/page.client";
+import { Container } from "@mantine/core";
+
+async function fetchOrganizations(token: string) {
+    return getOrganizations(token);
+}
+
+export default async function OrganizationPage() {
+    const token = getToken();
+
+    if (!token || token == "") {
+        notFound();
+    }
+
+    const organizationResult = await fetchOrganizations(token);
+    if (!organizationResult.success) {
+        notFound();
+    }
+
+    const organizations = organizationResult.value;
+
     return <>
-        <h1>조직 관리 페이지 (/app/organization)</h1>
-        회원가입 후 처음 보는 페이지 <br />
-        조직 추가/제거, 조직에 유저 추가/제거 등
+        <Container fluid>
+            <h1>조직 선택 및 관리</h1>
+            <OrganizationClientPage organizations={ organizations } />
+        </Container>
     </>;
 }

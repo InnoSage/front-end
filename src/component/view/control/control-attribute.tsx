@@ -2,29 +2,10 @@ import { Button, ComboboxItem, Flex, Input, Modal, Select, TagsInput } from "@ma
 import { IconPlus, IconTablePlus } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { ReactNode, useState } from "react";
-import { AttributeType } from "@/function/table/type";
+import { AttributeType, AttributeTypeMap, getAttributeType } from "@/function/table/type";
 import { CurrencyMap } from "@/function/currency";
 
 type ControlAttributeProps = {};
-
-const AttributeTypeMap: Record<AttributeType, ReactNode> = {
-    TEXT: "텍스트",
-    NUMBER: "숫자",
-    CURRENCY: "통화",
-    DATE: "날짜",
-    SELECT: "선택",
-    MULTISELECT: "다중선택",
-    CHECKBOX: "체크박스",
-    USER: "유저"
-};
-
-function getAttributeType(s: string): AttributeType | undefined {
-    for (const key of Object.keys(AttributeTypeMap)) {
-        if (AttributeTypeMap[key as AttributeType] == s) {
-            return key as AttributeType;
-        }
-    }
-}
 
 export default function ControlAttribute({}: Readonly<ControlAttributeProps>) {
     const [ attributeOpened, { open, close } ] = useDisclosure(false);
