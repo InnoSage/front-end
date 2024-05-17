@@ -15,7 +15,7 @@ export default function LandingPage() {
                     </Title>
                     <Title c="dimmed" order={ 3 }>[이노시트]</Title>
                     <Text c="dimmed" mt="md">
-                        <Mark color="quota-green.5">AI 어시스턴트</Mark>와 함께하는
+                        <Mark color="quota-green.5">AI 어시스턴트</Mark>와 함께하는&nbsp;
                         <Mark color="quota-green.5">동적 속성</Mark> 기반의 투자 내역 관리 플랫폼
                     </Text>
                     <LandingClientPage />
