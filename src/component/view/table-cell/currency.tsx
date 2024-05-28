@@ -9,5 +9,9 @@ interface CurrencyCellRendererProps extends CustomCellRendererProps {
 export function CurrencyCellRenderer(params: CurrencyCellRendererProps) {
     const { symbol, value } = params;
 
+    if (!value) {
+        return <></>;
+    }
+
     return `${symbol} ${value}`;
 }

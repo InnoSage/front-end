@@ -1,7 +1,7 @@
 "use client";
 
 import { Organization } from "@/function/api/organization";
-import { Card, Center, Container, Grid, Text } from "@mantine/core";
+import { Grid } from "@mantine/core";
 import OrganizationCard from "@/component/organization/organization-card";
 import NewOrganizationCard from "@/component/organization/new-organization-card";
 
