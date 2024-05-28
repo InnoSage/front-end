@@ -63,7 +63,7 @@ Front-End repository
 
 ![Landing](https://raw.githubusercontent.com/InnoSage/front-end/main/docs/01-Landing.png)
 
-![Login](https://raw.githubusercontent.com/InnoSage/front-end/main/docs/02-Landing.png)
+![Login](https://raw.githubusercontent.com/InnoSage/front-end/main/docs/02-Login.png)
 
 ![Signup1](https://raw.githubusercontent.com/InnoSage/front-end/main/docs/03-01-Signup.png)
 
