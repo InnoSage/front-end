@@ -2,7 +2,11 @@ import { AppShell, AppShellMain, AppShellNavbar } from "@mantine/core";
 import type { ReactNode } from "react";
 import ApplicationNavbar from "@/component/app-nav/nav";
 
-export default function ApplicationMantineLayout({ children }: Readonly<{ children: ReactNode }>) {
+type ApplicationMantineLayoutProps = {
+    children: ReactNode
+};
+
+export default function ApplicationMantineLayout({ children }: Readonly<ApplicationMantineLayoutProps>) {
     return (
         <AppShell
             navbar={ {
@@ -11,7 +15,7 @@ export default function ApplicationMantineLayout({ children }: Readonly<{ childr
             } }
         >
             <AppShellNavbar>
-                <ApplicationNavbar username="username" organization="organization" />
+                <ApplicationNavbar />
             </AppShellNavbar>
             <AppShellMain>
                 {children}

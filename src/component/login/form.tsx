@@ -47,7 +47,9 @@ export default function LoginForm() {
     // password input handler for password length validation
     const onPasswordChange: ChangeEventHandler<HTMLInputElement> = (e) => {
         const currentInput = e.target.value;
-        setPasswordState({ isValid: currentInput.length > 12, isEmpty: currentInput.length == 0 });
+
+        // temporally password length validation disabled. it should be 12
+        setPasswordState({ isValid: currentInput.length > 1, isEmpty: currentInput.length == 0 });
     };
 
     const isButtonDisabled = () => !emailState.isValid || emailState.isEmpty

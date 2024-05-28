@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
 const defaultMetadata: Metadata = {
-    title: "SERVICE NAME HERE",
-    description: "SERVICE DESCRIPTION HERE",
+    title: "InnoSheet",
+    description: "InnoSheet: AI 어시스턴트와 함께하는 투자 관리 플랫폼",
     openGraph: {
-        title: "SERVICE NAME WITH CATCHPHRASE HERE",
-        siteName: "SERVICE NAME HERE",
-        description: "SERVICE DESCRIPTION HERE",
-        url: "SERVICE URL HERE",
+        title: "InnoSheet",
+        siteName: "InnoSheet",
+        description: "AI 어시스턴트와 함께하는 투자 관리 플랫폼 \"InnoSheet\"",
+        url: process.env.SITE_URL ?? "http://localhost:3000",
         type: "website"
     },
     robots: {

@@ -1,27 +1,26 @@
 "use client";
 
-import { Button, Flex, Menu } from "@mantine/core";
-import { IconFilter } from "@tabler/icons-react";
-import ControlDeal from "@/component/view/control-deal";
-import ControlAttribute from "@/component/view/control-attribute";
+import { Flex } from "@mantine/core";
+import ControlDeal from "@/component/view/control/control-deal";
+import ControlAttribute from "@/component/view/control/control-attribute";
+import ControlFilter from "@/component/view/control/control-filter";
+import ControlDelete from "@/component/view/control/control-delete";
+import FilterDisplay from "@/component/view/control/filter/filter-display";
 
 type TableControlProps = {};
 
 export default function TableControl({}: Readonly<TableControlProps>) {
 
     return <Flex w="100%" h="100%" align="center">
-        <ControlDeal companies={ [ "회사1", "회사2", "회사3" ] } />
-        <ControlAttribute />
+        <Flex h="100%" w="38rem" align="center">
+            <ControlDeal companies={ [ "회사1", "회사2", "회사3" ] } />
+            <ControlAttribute />
+            <ControlFilter />
+        </Flex>
+        <Flex h="100%" w="100%" align="center" justify="space-between">
+            <FilterDisplay />
+            <ControlDelete />
+        </Flex>
 
-        <Menu>
-            <Menu.Target>
-                <Button variant="filled" mr="xs" leftSection={ <IconFilter size={ 14 } /> }>필터 추가</Button>
-            </Menu.Target>
-            <Menu.Dropdown>
-                <Menu.Label>필터 추가</Menu.Label>
-            </Menu.Dropdown>
-        </Menu>
-
-        <Flex flex={ 1 } />
     </Flex>;
 }
