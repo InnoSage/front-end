@@ -22,7 +22,7 @@ function toAttributes(attributes: SheetAttribute[], sheetId: number, companyLeng
             colId: "company",
             field: "company",
             headerName: "회사명",
-            minWidth: Number(px(`${(companyLength / 2) + 8.5}rem`)),
+            minWidth: Number(px(`${(companyLength / 2) + 9}rem`)),
             suppressMovable: true,
             cellRendererParams: { sheetId },
             cellRenderer: CompanyCellRenderer,

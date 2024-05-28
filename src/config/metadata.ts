@@ -7,7 +7,7 @@ const defaultMetadata: Metadata = {
         title: "InnoSheet",
         siteName: "InnoSheet",
         description: "AI 어시스턴트와 함께하는 투자 관리 플랫폼 \"InnoSheet\"",
-        url: "SERVICE URL HERE",
+        url: process.env.SITE_URL ?? "http://localhost:3000",
         type: "website"
     },
     robots: {
