@@ -32,7 +32,7 @@ export const useSheetListStore = <T,>(selector: (store: SheetListStore)=> T,) =>
     const context = useContext(SheetListStoreContext);
 
     if (!context) {
-        throw new Error("useUserStore must be used within a UserStoreProvider");
+        throw new Error("useSheetListStore must be used within a UserSheetListProvider");
     }
 
     return useStore(context, selector);
