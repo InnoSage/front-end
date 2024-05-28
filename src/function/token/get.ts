@@ -1,11 +1,14 @@
 import getCookie from "@/function/cookie/get";
 import {
-    TOKEN_KEY,
-    REFRESH_TOKEN_KEY,
-    USERNAME_KEY,
     AUTOLOGIN_KEY,
+    CURRENT_ORG_ID_KEY,
+    CURRENT_ORG_NAME_KEY,
+    REFRESH_EXPIRES_KEY,
+    REFRESH_TOKEN_KEY,
+    TOKEN_EXPIRES_KEY,
+    TOKEN_KEY,
     USER_ID_KEY,
-    CURRENT_ORG_ID_KEY, CURRENT_ORG_NAME_KEY, TOKEN_EXPIRES_KEY, REFRESH_EXPIRES_KEY
+    USERNAME_KEY
 } from "@/config/cookie";
 
 export function getToken() {

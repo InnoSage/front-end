@@ -1,5 +1,4 @@
-import { CurrencyMap } from "@/function/currency";
-import { ReactNode } from "react";
+import { CurrencyCode } from "@/function/currency";
 
 export type AttributeType = "TEXT" | "NUMBER" | "CURRENCY" | "DATE" | "SELECT" | "MULTISELECT" | "CHECKBOX" | "USER";
 
@@ -26,44 +25,76 @@ export function getAttributeName(s: AttributeType): string {
     return AttributeTypeMap[s];
 }
 
-export interface BaseSheetAttribute {
-    attributeId: number,
-    attributeName: string,
-    dataType: AttributeType
+interface BaseSheetAttribute {
+    id: number,
+    name: string,
+    data: unknown
 }
 
-export interface SheetSelectAttribute extends BaseSheetAttribute {
-    dataType: "SELECT" | "MULTISELECT",
-    options: {
-        optionId: number,
-        value: string
-    }[]
+export interface TextAttribute extends BaseSheetAttribute {
+    dataType: "TEXT"
 }
 
-export interface SheetCurrencyAttribute extends BaseSheetAttribute {
+export interface NumberAttribute extends BaseSheetAttribute {
+    dataType: "NUMBER"
+}
+
+export interface CurrencyAttribute extends BaseSheetAttribute {
     dataType: "CURRENCY",
-    currency: keyof typeof CurrencyMap
+    data: {
+        currency: CurrencyCode
+    }
 }
 
-export interface SheetUserAttribute extends BaseSheetAttribute {
+export interface SelectAttribute extends BaseSheetAttribute {
+    dataType: "SELECT",
+    data: {
+        options: {
+            optionId: number,
+            optionName: string
+        }[]
+    }
+}
+
+export interface MultiSelectAttribute extends BaseSheetAttribute {
+    dataType: "MULTISELECT",
+    data: {
+        options: {
+            optionId: number,
+            optionName: string
+        }[]
+    }
+}
+
+export interface UserAttribute extends BaseSheetAttribute {
     dataType: "USER",
-    users: {
-        username: string,
-        userEmail: string
-    }[]
+    data: {
+        users: {
+            email: string,
+            username: string
+        }[]
+    }
 }
 
-export type SheetAttribute = BaseSheetAttribute | SheetSelectAttribute | SheetCurrencyAttribute | SheetUserAttribute;
+export interface CheckboxAttribute extends BaseSheetAttribute {
+    dataType: "CHECKBOX"
+}
+
+export interface DateAttribute extends BaseSheetAttribute {
+    dataType: "DATE"
+}
+
+export type SheetAttribute = TextAttribute | NumberAttribute
+    | CurrencyAttribute | SelectAttribute
+    | MultiSelectAttribute | UserAttribute
+    | CheckboxAttribute | DateAttribute;
+
 
 export interface SheetFilter {
+    id: number,
     targetAttributeId: number,
-    operation: string,
-    value: any
-}
-
-export interface SheetSort {
-    targetAttributeId: number,
-    order: "ASC" | "DESC"
+    keyword: string,
+    filterType: string
 }
 
 export interface SheetCompany {
@@ -73,7 +104,7 @@ export interface SheetCompany {
 
 export interface SheetDealValue {
     attributeId: number,
-    value: any
+    value: unknown
 }
 
 export interface SheetDeal {
@@ -83,10 +114,10 @@ export interface SheetDeal {
 }
 
 export interface Sheet {
+    sheetId: number,
     sheetName: string,
     attributes: SheetAttribute[],
-    filter: SheetFilter[],
-    sort: SheetSort[],
+    filters: SheetFilter[],
     companies: SheetCompany[],
     deals: SheetDeal[]
 }

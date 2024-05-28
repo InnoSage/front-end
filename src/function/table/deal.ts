@@ -1,50 +1,50 @@
 import type {
     AttributeType,
-    Sheet,
+    CurrencyAttribute,
+    MultiSelectAttribute,
+    SelectAttribute,
     SheetAttribute,
     SheetCompany,
-    SheetCurrencyAttribute,
-    SheetDeal,
-    SheetSelectAttribute
+    SheetDeal
 } from "@/function/table/type";
 import { ColDef } from "@ag-grid-community/core";
-import { MultiselectCellEditor, MultiselectCellRenderer } from "@/component/view/cell/multiselect";
+import { MultiselectCellEditor, MultiselectCellRenderer } from "@/component/view/table-cell/multiselect";
 import { CurrencyMap } from "@/function/currency";
-import { CurrencyCellRenderer } from "@/component/view/cell/currency";
-import { SelectCellEditor, SelectCellRenderer } from "@/component/view/cell/select";
+import { CurrencyCellRenderer } from "@/component/view/table-cell/currency";
+import { SelectCellEditor, SelectCellRenderer } from "@/component/view/table-cell/select";
+import { CompanyCellRenderer } from "@/component/view/table-cell/company";
+import { px } from "@mantine/core";
+import { SheetStore } from "@/store/sheet.store";
 
-export type DealAttribute = {
-    attributeId: number,
-    attributeName: string,
-    dataType: AttributeType,
-    options?: { optionId: number, value: string }[]
-};
-
-function toAttributes(attributes: SheetAttribute[]) {
+function toAttributes(attributes: SheetAttribute[], sheetId: number, companyLength: number) {
     const cols: ColDef[] = [
-        {
-            colId: "num",
-            field: "num",
-            headerName: "",
-            checkboxSelection: true,
-            maxWidth: 75, minWidth: 75,
-            editable: false,
-            headerCheckboxSelection: true,
-            valueGetter: "node.rowIndex + 1"
-        },
         {
             colId: "company",
             field: "company",
-            headerName: "회사명"
+            headerName: "회사명",
+            minWidth: Number(px(`${(companyLength / 2) + 8.5}rem`)),
+            suppressMovable: true,
+            cellRendererParams: { sheetId },
+            cellRenderer: CompanyCellRenderer,
+            headerComponentParams: {
+                attributeId: -1
+            }
+
+            // TODO: ADD COMPANY CELL EDITOR
         }
     ];
 
     for (const attr of attributes) {
         const col: ColDef = {
-            colId: attr.attributeId.toString(),
-            field: attr.attributeId.toString(),
-            headerName: attr.attributeName,
-            editable: true
+            colId: attr.id.toString(),
+            field: attr.id.toString(),
+            headerName: attr.name,
+            editable: true,
+            headerComponentParams: {
+                dataType: attr.dataType,
+                attributeId: attr.id
+            },
+            minWidth: Number(px(`${(attr.name.length / 2) + 4.5}rem`))
         };
 
         const byType: Partial<Record<AttributeType, ()=> void>> = {
@@ -56,25 +56,34 @@ function toAttributes(attributes: SheetAttribute[]) {
             },
             CURRENCY: () => {
                 col.cellDataType = "number";
-                const { currency } = (attr as SheetCurrencyAttribute);
-                const { symbol } = CurrencyMap[currency];
+                const currency = (attr as CurrencyAttribute)?.data?.currency;
+                let symbol: string;
+                if (!currency) {
+                    symbol = "";
+                } else {
+                    symbol = CurrencyMap[currency].symbol;
+                }
                 col.cellRendererParams = { symbol };
                 col.cellRenderer = CurrencyCellRenderer;
+                col.headerComponentParams = {
+                    ...col.headerComponentParams,
+                    currency
+                };
             },
             SELECT: () => {
-                const { options } = (attr as SheetSelectAttribute);
+                const { options } = (attr as SelectAttribute).data;
                 col.cellEditor = SelectCellEditor;
-                col.cellEditorParams = { options };
+                col.cellEditorParams = { options, attributeId: attr.id };
                 col.cellEditorPopup = true;
                 col.cellRenderer = SelectCellRenderer;
                 col.cellRendererParams = { options };
             },
             MULTISELECT: () => {
-                const { options } = (attr as SheetSelectAttribute);
-                const values = options.map((o) => o.value);
+                const { options } = (attr as MultiSelectAttribute).data;
+                const values = options.map((o) => o.optionId);
                 col.cellEditor = MultiselectCellEditor;
                 col.cellEditorPopup = true;
-                col.cellEditorParams = { values, options };
+                col.cellEditorParams = { values, options, attributeId: attr.id };
                 col.cellRenderer = MultiselectCellRenderer;
                 col.cellRendererParams = { options };
             },
@@ -104,12 +113,12 @@ function toData(attributes: SheetAttribute[], companies: SheetCompany[], data: S
     const AttributeTypeMap: Record<number, AttributeType> = {};
     const AttributeOptionMap: Record<number, Record<number, string>> = {};
     attributes.map((attr) => {
-        AttributeTypeMap[attr.attributeId] = attr.dataType;
+        AttributeTypeMap[attr.id] = attr.dataType;
 
         if (attr.dataType == "SELECT" || attr.dataType == "MULTISELECT") {
-            AttributeOptionMap[attr.attributeId] = {};
-            (attr as SheetSelectAttribute).options.map((o) => {
-                AttributeOptionMap[attr.attributeId][o.optionId] = o.value;
+            AttributeOptionMap[attr.id] = {};
+            (attr as (SelectAttribute | MultiSelectAttribute)).data.options.map((o) => {
+                AttributeOptionMap[attr.id][o.optionId] = o.optionId.toString();
             });
         }
     });
@@ -119,24 +128,26 @@ function toData(attributes: SheetAttribute[], companies: SheetCompany[], data: S
 
     return data.map((d, i) => {
         const value: Record<string, any> = {};
+
+        value["id"] = d.id;
+        value["company"] = CompanyMap[d.companyId];
+
         d.values.map((v) => {
             if (AttributeTypeMap[v.attributeId] == "DATE") {
-                value[v.attributeId.toString()] = new Date(v.value * 1000);
+                value[v.attributeId.toString()] = new Date(v.value as string);
             } else {
                 value[v.attributeId.toString()] = v.value;
             }
         });
 
-        value["company"] = CompanyMap[d.companyId];
-        value["id"] = d.id;
-
         return value;
     });
 }
 
-export function sheetToTable(sheet: Sheet) {
-    const attributes = toAttributes(sheet.attributes);
-    const data = toData(sheet.attributes, sheet.companies, sheet.deals);
+export function sheetToTable(sheet: SheetStore, sheetId: number) {
+    const companyLength = Math.max(...sheet.companies.map((c) => c.name.length));
+    const attributes = toAttributes(sheet.attributes, sheetId, companyLength);
+    const data = toData(sheet.attributes, sheet.companies, sheet.getFilteredDeals());
 
     return { attributes, data };
 }
