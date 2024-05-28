@@ -1,4 +1,4 @@
-import { Button, Flex, Input, Text, TextInput } from "@mantine/core";
+import { Button, Flex, Text, TextInput } from "@mantine/core";
 import { ChangeEventHandler, useState } from "react";
 import { useTimer } from "react-timer-hook";
 import { isEmailFormat } from "@/function/validation/email";

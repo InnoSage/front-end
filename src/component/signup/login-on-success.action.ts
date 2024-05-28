@@ -2,7 +2,6 @@
 
 import { login } from "@/function/api/login";
 import {
-    setAutoLogin,
     setCurrentOrgId,
     setCurrentOrgName,
     setRefreshToken,

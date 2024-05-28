@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Flex, Paper, TextInput, Text, PasswordInput } from "@mantine/core";
+import { Button, Flex, Paper, PasswordInput, Text, TextInput } from "@mantine/core";
 import { useRouter } from "next/navigation";
 import EmailVerify from "@/component/signup/email-verify";
 import { useSignupStore } from "@/store/signup";

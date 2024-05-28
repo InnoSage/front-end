@@ -22,7 +22,7 @@ export default function LandingLayout({ children }: { children: any }) {
     return (
         <html lang="ko">
             <head>
-                <ColorSchemeScript />
+                <ColorSchemeScript suppressHydrationWarning />
                 <meta
                     name="viewport"
                     content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"

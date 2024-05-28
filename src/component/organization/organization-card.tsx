@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, Flex, Group, Text, useComputedColorScheme } from "@mantine/core";
+import { Button, Card, Group, Text, useComputedColorScheme } from "@mantine/core";
 import { useUserStore } from "@/store/user";
 import selectOrganization from "@/component/organization/select-org.action";
 import { useSheetListStore } from "@/store/sheet-list";
